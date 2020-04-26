@@ -7,10 +7,6 @@ public class BinarySearchTree {
         this.root = null;
     }
 
-    public TreeNode getRoot() {
-        return root;
-    }
-
     public void add(int val) {
         this.root = this.addRecursive(this.root, val);
     }
