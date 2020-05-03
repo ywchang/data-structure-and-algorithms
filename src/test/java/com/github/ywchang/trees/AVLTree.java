@@ -76,7 +76,28 @@ public class AVLTree {
             node.left = leftRotation(node.left);
             return rightRotation(node);
         }
+        if (balance < 1 && val > node.right.val) {
+            return leftRotation(node);
+        }
+        if (balance < 1 && val < node.right.val) {
+            node.right = rightRotation(node.right);
+            return this.leftRotation(node);
+        }
         return node;
+    }
+
+    public TreeNode search(int val) {
+        return this.searchRecursive(this.root, val);
+    }
+
+    private TreeNode searchRecursive(TreeNode node, int val) {
+        if (node == null || node.val == val) {
+            return node;
+        }
+        if (val < node.val) {
+            return this.searchRecursive(node.left, val);
+        }
+        return this.searchRecursive(node.right, val);
     }
 
     public String toString() {
