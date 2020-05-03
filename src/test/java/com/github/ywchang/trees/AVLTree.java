@@ -76,10 +76,10 @@ public class AVLTree {
             node.left = leftRotation(node.left);
             return rightRotation(node);
         }
-        if (balance < 1 && val > node.right.val) {
+        if (balance < -1 && val > node.right.val) {
             return leftRotation(node);
         }
-        if (balance < 1 && val < node.right.val) {
+        if (balance < -1 && val < node.right.val) {
             node.right = rightRotation(node.right);
             return this.leftRotation(node);
         }
@@ -102,5 +102,55 @@ public class AVLTree {
 
     public String toString() {
         return Trees.toString(this.root);
+    }
+
+    public void remove(int val) {
+        this.root = this.removeRecursive(this.root, val);
+    }
+
+    private int getMinVal(TreeNode node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node.val;
+    }
+
+    private TreeNode removeRecursive(TreeNode node, int val) {
+        if (node == null) {
+            return null;
+        }
+        if (val < node.val) {
+            node.left = this.removeRecursive(node.left, val);
+        } else if (val > node.val) {
+            node.right = this.removeRecursive(node.right, val);
+        } else if (node.left == null) {
+            node = node.right;
+        } else if (node.right == null) {
+            node = node.left;
+        } else {
+            int minVal = getMinVal(node.right);
+            node.val = minVal;
+            node.right = this.removeRecursive(node.right, minVal);
+        }
+        if (node == null) {
+            return null;
+        }
+        node.height = Math.max(getHeight(node.left), getHeight(node.right)) + 1;
+        int balance = getBalance(node);
+        if (balance < -1 && getBalance(node.right) < 0) {
+            return this.leftRotation(node);
+        }
+        if (balance < -1 && getBalance(node.right) >= 0) {
+            node.right = rightRotation(node.right);
+            return this.leftRotation(node);
+        }
+        if (balance > 1 && getBalance(node.left) >= 0) {
+            return this.rightRotation(node);
+        }
+        if (balance > 1 && getBalance(node.left) < 0) {
+            node.left = leftRotation(node.left);
+            return this.rightRotation(node);
+        }
+        return node;
     }
 }
