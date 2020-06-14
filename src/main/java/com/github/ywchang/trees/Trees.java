@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Trees {
     public static String toString(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
+        List<TreeNode> result = new ArrayList<>();
         if (root == null) {
             return Arrays.toString(result.toArray());
         }
@@ -15,7 +15,7 @@ public class Trees {
             if (n == null) {
                 result.add(null);
             } else {
-                result.add(n.val);
+                result.add(n);
                 queue.offerLast(n.left);
                 queue.offerLast(n.right);
             }

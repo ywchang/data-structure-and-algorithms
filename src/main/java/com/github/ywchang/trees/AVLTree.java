@@ -1,8 +1,5 @@
 package com.github.ywchang.trees;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class AVLTree {
     private TreeNode root;
 
